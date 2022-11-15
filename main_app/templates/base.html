@@ -15,11 +15,11 @@
     <nav>
       <div class="nav-wrapper green lighten-2">
         <ul>
-          <li><a href="/" class="left brand-logo ">Plant Collector</a></li>
+          <li><a href="{% url 'home' %}" class="left brand-logo ">Plant Collector</a></li>
         </ul>
         <ul class="right">
-          <li><a href="/about">About</a></li>
-          <li><a href="/plants">View All My Plants</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'plant_index' %}">View All My Plants</a></li>
         </ul>
       </div>
     </nav>
