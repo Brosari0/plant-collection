@@ -9,6 +9,10 @@
     <p>Family: {{ plant.family }}</p>
     <p>Description: {{ plant.description|linebreaks }}</p>
   </div>
+  <div class="card-action green lighten-2">
+    <a href="{% url 'plants_update' plant.id %}" class="white-text">Edit</a>
+    <a href="{% url 'plants_delete' plant.id %}" class="white-text">Delete</a>
+  </div>
 </div>
 
 {% endblock %}
