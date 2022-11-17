@@ -13,6 +13,45 @@
     <a href="{% url 'plants_update' plant.id %}" class="white-text">Edit</a>
     <a href="{% url 'plants_delete' plant.id %}" class="white-text">Delete</a>
   </div>
-</div>
+  <div class="col s6">
+    <form action="{% url 'add_watering' plant.id %}" method="POST">
+      {% csrf_token %}
+      <!-- Render the inputs -->
+      {{ watering_form.as_p }}
+      <input type="submit" class="btn" value="Water Plant">
+    </form>
 
+    {% if plant.watered_for_today %}
+      <div class="card-panel teal-text center-align">{{plant.name}} has been watered for the day</div>
+    {% else %}
+       <div class="card-panel red-text center-align">{{plant.name}} still needs to be watered</div> 
+    {% endif %}
+
+    <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>Watered</th></tr>
+      </thead>
+      <tbody>
+        {% for watering in plant.watering_set.all %}
+          <tr>
+            <td>{{watering.date}}</td>
+            <td>{{watering.get_watered_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  const dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true,
+  });
+
+  const selectEl = document.getElementById('id_watered');
+  M.FormSelect.init(selectEl);
+</script>
 {% endblock %}
