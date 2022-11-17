@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Continent List</h1>
+
+{% for continent in continent_list %}
+  <a href="{% url 'continents_detail' continent.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ continent.name }}</span>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}

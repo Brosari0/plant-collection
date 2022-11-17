@@ -22,24 +22,73 @@
     </form>
 
     {% if plant.watered_for_today %}
-      <div class="card-panel teal-text center-align">{{plant.name}} has been watered for the day</div>
+    <div class="card-panel teal-text center-align">{{plant.name}} has been watered for the day</div>
     {% else %}
-       <div class="card-panel red-text center-align">{{plant.name}} still needs to be watered</div> 
+    <div class="card-panel red-text center-align">{{plant.name}} still needs to be watered</div>
     {% endif %}
 
     <table class="striped">
       <thead>
-        <tr><th>Date</th><th>Watered</th></tr>
+        <tr>
+          <th>Date</th>
+          <th>Watered</th>
+        </tr>
       </thead>
       <tbody>
         {% for watering in plant.watering_set.all %}
-          <tr>
-            <td>{{watering.date}}</td>
-            <td>{{watering.get_watered_display}}</td>
-          </tr>
+        <tr>
+          <td>{{watering.date}}</td>
+          <td>{{watering.get_watered_display}}</td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
+  </div>
+</div>
+<div class="col s6">
+  <h3>{{ plant.name }}'s Continents</h3>
+  {% if plant.continents.count %}
+  {% for continent in plant.continents.all %}
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">
+        {{ continent.name }}
+      </span>
+    </div>
+    <div class="card-action">
+      <form action="{% url 'disassoc_continent' plant.id continent.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn">Remove</button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <h5>Need to add continents </h5>
+  {% endif %}
+</div>
+<div class="row">
+  <div class="col s6">
+    <h3>Available Continents</h3>
+    {% if continents.count %}
+    {% for continent in continents.all %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          {{ continent.name }}
+        </span>
+      </div>
+      <div class="card-action">
+        <form action="{% url 'assoc_continent' plant.id continent.id %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn">Add</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h5>{{plant.name}} is in every continent</h5>
+    {% endif %}
   </div>
 </div>
 <script>
